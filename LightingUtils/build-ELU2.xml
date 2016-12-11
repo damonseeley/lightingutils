@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="dist" name="ElectrolandLightingUtils2">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="ElectrolandLightingUtils2.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="libraries/log4j-1.2.15.jar"/>
+        <pathelement location="libraries/j3dcore.jar"/>
+        <pathelement location="libraries/j3dutils.jar"/>
+        <pathelement location="libraries/vecmath.jar"/>
+        <pathelement location="libraries/EL-Config.jar"/>
+    </path>
+    <path id="run.ELUManager.classpath">
+        <pathelement location="depends"/>
+        <path refid="ElectrolandLightingUtils2.classpath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target name="dist" depends="build-eclipse-compiler" description="Jar it all up">
+        <echo>Jarring it all up.</echo>
+        <jar destfile="dist/ELU2.jar" basedir="bin">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Implementation-Vendor" value="Electroland"/>
+                <attribute name="Implementation-Title" value="ELU"/>
+                <attribute name="Implementation-Version" value="1.0"/>
+                <attribute name="includeantruntime" value="false"/>
+            </manifest>  
+        </jar>
+         <echo>and done.</echo>
+    </target>    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="ElectrolandLightingUtils2.classpath"/>
+        </javac>
+    </target>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="ELUManager">
+        <java classname="net.electroland.utils.lighting.ELUManager" failonerror="true" fork="yes">
+            <classpath refid="run.ELUManager.classpath"/>
+        </java>
+    </target>
+    <target name="KiNetData">
+        <java classname="net.electroland.utils.lighting.protocols.kinet.KiNetData" failonerror="true" fork="yes">
+            <classpath refid="ElectrolandLightingUtils2.classpath"/>
+        </java>
+    </target>
+</project>

@@ -1,0 +1,1 @@
+java -classpath EL-Config.jar; net.electroland.utils.process.ProcessManager

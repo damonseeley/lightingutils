@@ -1,0 +1,28 @@
+2.) ELUCanvas2D and ARTNetRecipient need constants instead of "recipient"...
+3.) GUI
+4.) have ElectrolandProperties extend Properties?
+5.) move configuration out of ELUManager (so you can save, for example).
+6.) any other refactoring? ENUM of propertie tags?
+7.) other protocols to ELU
++-----------------------------------------+
+|[ - select canvas - ]                    | <-- drop down  
++-----------------------------------------+
++  show detectors           | meta-data   +
++                           | for         +
++                           | selected    +
++                           | detector    +
++                           | and fixtre  +
++                           |             +
++                           |             +
++                           |             +
++                           |             +
++-----------------------------------------+
++ desired fps [    ] measured fps: 33     + <-- text field
++ [sweep] [alloff] [allon] [start] [stop] + <-- buttons
++-----------------------------------------+
+
+When a detector is selected, highlight it, medium light the other detectors in
+the same fixture as it.  Spit out meta-data on the right side, including
+what DetectionModel is defined for it, plus geomotry and fixturetype.
+
+Color of each detector should reflect current state.

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="dist" name="LightingUtilsDemo">
+    <property environment="env"/>
+    <property name="EIO2.location" value="../EIO2"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="LightingUtilsDemo.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="libraries/core.jar"/>
+        <pathelement location="libraries/jl1.0.jar"/>
+        <pathelement location="libraries/jsminim.jar"/>
+        <pathelement location="libraries/log4j-1.2.15.jar"/>
+        <pathelement location="libraries/minim-spi.jar"/>
+        <pathelement location="libraries/minim.jar"/>
+        <pathelement location="libraries/mp3spi1.9.4.jar"/>
+        <pathelement location="libraries/tritonus_aos.jar"/>
+        <pathelement location="libraries/tritonus_share.jar"/>
+        <pathelement location="libraries/vecmath.jar"/>
+        <pathelement location="libraries/EIO2.jar"/>
+        <pathelement location="libraries/EL-Config.jar"/>
+        <pathelement location="libraries/EA2.jar"/>
+        <pathelement location="libraries/ELU2.jar"/>
+    	<pathelement location="libraries/javaosc-core-0.2.jar"/>
+    </path>
+    <path id="run.Conductor.classpath">
+        <path refid="LightingUtilsDemo.classpath"/>
+        <pathelement location="depends"/>
+        <pathelement location="depends/images"/>
+    </path>
+    <path id="EIO2.classpath">
+        <pathelement location="${EIO2.location}/bin"/>
+        <pathelement location="${EIO2.location}/libraries/EL-Config.jar"/>
+        <pathelement location="${EIO2.location}/libraries/jamod.jar"/>
+        <pathelement location="${EIO2.location}/libraries/log4j-1.2.15.jar"/>
+    </path>
+    <path id="ElectrolandAnimation2.classpath">
+        <pathelement location="${ElectrolandAnimation2.location}/bin"/>
+        <pathelement location="${ElectrolandAnimation2.location}/libraries/j3dcore.jar"/>
+        <pathelement location="${ElectrolandAnimation2.location}/libraries/j3dutils.jar"/>
+        <pathelement location="${ElectrolandAnimation2.location}/libraries/log4j-1.2.15.jar"/>
+        <pathelement location="${ElectrolandAnimation2.location}/libraries/vecmath.jar"/>
+        <pathelement location="${ElectrolandAnimation2.location}/libraries/EL-Config.jar"/>
+    </path>
+    <path id="ElectrolandConfig.classpath">
+        <pathelement location="${ElectrolandConfig.location}/bin"/>
+        <pathelement location="${ElectrolandConfig.location}/libraries/log4j-1.2.15.jar"/>
+    </path>
+    <path id="ElectrolandLightingUtils2.classpath">
+        <pathelement location="${ElectrolandLightingUtils2.location}/bin"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/log4j-1.2.15.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/j3dcore.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/j3dutils.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/vecmath.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/EL-Config.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/core.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/gluegen-rt-natives-linux-amd64.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/gluegen-rt-natives-linux-i586.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/gluegen-rt-natives-macosx-universal.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/gluegen-rt-natives-windows-amd64.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/gluegen-rt-natives-windows-i586.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/gluegen-rt.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/jogl-all-natives-linux-amd64.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/jogl-all-natives-linux-i586.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/jogl-all-natives-macosx-universal.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/jogl-all-natives-windows-amd64.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/jogl-all-natives-windows-i586.jar"/>
+        <pathelement location="${ElectrolandLightingUtils2.location}/libraries/jogl-all.jar"/>
+    </path>
+    <path id="run.Test EIO2 Sensors.classpath">
+        <path refid="LightingUtilsDemo.classpath"/>
+        <path refid="EIO2.classpath"/>
+        <path refid="ElectrolandAnimation2.classpath"/>
+        <path refid="ElectrolandConfig.classpath"/>
+        <path refid="ElectrolandLightingUtils2.classpath"/>
+        <pathelement location="depends"/>
+        <pathelement location="libraries/log4j-1.2.15.jar"/>
+        <pathelement location="${EIO2.location}/libraries/jamod.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target name="dist" depends="build-eclipse-compiler" description="Jar it all up">
+        <echo>Jarring it all up.</echo>
+        <jar destfile="dist/lightingutilsdemo.jar" basedir="bin">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Implementation-Vendor" value="Electroland"/>
+                <attribute name="Implementation-Title" value="Norfolk"/>
+                <attribute name="Implementation-Version" value="1.0"/>
+                <attribute name="includeantruntime" value="false"/>
+            </manifest>  
+        </jar>
+         <echo>and done.</echo>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="LightingUtilsDemo.classpath"/>
+        </javac>
+    </target>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="ClipPlayer">
+        <java classname="com.damonseeley.lightingutilsdemo.core.ClipPlayer" failonerror="true" fork="yes">
+            <classpath refid="LightingUtilsDemo.classpath"/>
+        </java>
+    </target>
+    <target name="Conductor">
+        <java classname="com.damonseeley.lightingutilsdemo.core.Conductor" failonerror="true" fork="yes">
+            <jvmarg line="-XX:+HeapDumpOnOutOfMemoryError"/>
+            <classpath refid="run.Conductor.classpath"/>
+        </java>
+    </target>
+    <target name="Test EIO2 Sensors">
+        <java classname="net.electroland.eio.IOFrameTest" failonerror="true" fork="yes">
+            <arg line="30 io.properties"/>
+            <classpath refid="run.Test EIO2 Sensors.classpath"/>
+        </java>
+    </target>
+</project>

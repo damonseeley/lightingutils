@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="libraries/core.jar"/>
+	<classpathentry kind="lib" path="libraries/jl1.0.jar"/>
+	<classpathentry kind="lib" path="libraries/jsminim.jar"/>
+	<classpathentry kind="lib" path="libraries/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="libraries/minim-spi.jar"/>
+	<classpathentry kind="lib" path="libraries/minim.jar"/>
+	<classpathentry kind="lib" path="libraries/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="libraries/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="libraries/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="libraries/vecmath.jar"/>
+	<classpathentry kind="lib" path="libraries/SunriseSunsetLib-bin.jar"/>
+	<classpathentry kind="lib" path="libraries/jamod.jar"/>
+	<classpathentry kind="lib" path="libraries/javaosc-core-0.2.jar"/>
+	<classpathentry kind="lib" path="libraries/EA2.jar"/>
+	<classpathentry kind="lib" path="libraries/EIO2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LightingUtils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ElectrolandConfig"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
