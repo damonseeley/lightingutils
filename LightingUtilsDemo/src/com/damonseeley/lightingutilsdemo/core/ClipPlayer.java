@@ -48,7 +48,7 @@ public class ClipPlayer implements AnimationListener {
     float rippleMultiplier, rippleDBrightness, rippleFloor;
     int rippleHold, rippleFadein, rippleFadeout;
 
-    private enum Message {SCREENSAVER, IVASE_THROB, SSVASE_THROB, COBRA_THROB, LEAVES, SPARKLE, COBRACLOUDS}
+    private enum Message {CHOOSE, SCREENSAVER, IVASE_THROB, SSVASE_THROB, COBRA_THROB, LEAVES, SPARKLE, COBRACLOUDS}
 
     //private int detOffset = 2;
 
@@ -217,15 +217,29 @@ public class ClipPlayer implements AnimationListener {
         if (message instanceof Message){
 
             switch((Message)message){
-            case SCREENSAVER:
-                //ssMultiClouds();
+            case CHOOSE:
+            	
             	//2016
+            	logger.info("case CHOOSE");
                 //ssOrangeYellow();
-                //ssFrozen();
-                ssCandyCane();
+            	if (Math.random() < 0.33) {
+            		 ssFrozen();
+             		logger.info("chose Frozen");
+
+            	} else if (Math.random() < 0.66) {
+            		ssCandyCane();
+            		logger.info("chose candycane");
+
+            	} else {
+            		ssSparkle();
+            		logger.info("chose sparkle");
+            	}                
+                                
 
             	break;
-            case SSVASE_THROB:
+            case SCREENSAVER:
+            	break;
+        	case SSVASE_THROB:
             	defaultClip();
             	break;
             case COBRA_THROB:
@@ -264,7 +278,6 @@ public class ClipPlayer implements AnimationListener {
     private int vaseVMin = 0;
     private int vaseVMax = 17;
     private int elementsVMax = 175;
-    private int cobrasVMin = 176;
     private int cobrasVMax = 400;
     private int leavesX = 130; //not right
     private int leavesY = 28;
@@ -295,12 +308,7 @@ public class ClipPlayer implements AnimationListener {
         ssCobras.keepAlive();
         ssLeaves.keepAlive();
         
-        //TESTS for regions
-        //ssVase.addClip(null, Color.getHSBColor(.0f, 1.0f, 1.0f), 0, 0, eam.getFrameDimensions().width, vaseVMax, 1.0f);
-        //ssFlora.addClip(null, Color.getHSBColor(.3f, 1.0f, 1.0f), 0, 0, eam.getFrameDimensions().width, elementsVMax, 1.0f);
-        //ssCobras.addClip(null, Color.getHSBColor(.6f, 1.0f, 1.0f), 0, 0, eam.getFrameDimensions().width, cobrasVMax, 1.0f);
-        //ssLeaves.addClip(null, Color.getHSBColor(.33f, 1.0f, 1.0f), 0, 0, leavesWidth, leavesHeight, 0.5f);
-
+      
         //init
         //ssInitCobras();
         
@@ -330,34 +338,38 @@ public class ClipPlayer implements AnimationListener {
         Clip last = null;
 
         for (Fixture f : elu.getFixtures()){
-            if (f.getName().toLowerCase().startsWith("f") 
-                || (f.getName().toLowerCase().startsWith("b") 
-                		&& !f.getName().toLowerCase().startsWith("base"))){
-                last = sparklet(f, delay += this.throbPeriod);
+            //if (f.getName().toLowerCase().startsWith("f") 
+                //|| (f.getName().toLowerCase().startsWith("b") 
+                		//&& !f.getName().toLowerCase().startsWith("base"))){
+            //last = sparklet(f, delay += this.throbPeriod);
+            last = fastSparklet(f, delay += 6); //08 ms delay?
                 clips.add(last);
-            }
+            //}
         }
         for (Clip c : clips){
             if (c == last){
-                c.announce(Message.SPARKLE);
+                c.announce(Message.CHOOSE);
             }
         }
     }
 
-    public Clip sparklet(Fixture fixture, int pause){
+    public Clip fastSparklet(Fixture fixture, int pause){
 
         logger.trace("start sparkle on " + fixture.getName() + " with pause of " + pause);
 
-        Clip f = eam.addClip(null, randomHue(0.7f, 0.5f, .99f, .99f),(int)fixture.getLocation().x - 4,(int)fixture.getLocation().y - 4, 10, 10, 0.0f);
-
+        //Clip f = eam.addClip(null, randomHue(0.5f, 0.4f, .99f, .99f),(int)fixture.getLocation().x - 4,(int)fixture.getLocation().y - 4, 10, 10, 0.0f);
+        Clip f = ssAll.addClip(null, randomHue(0.5f, 0.4f, .99f, .99f),(int)fixture.getLocation().x - 4,(int)fixture.getLocation().y - 4, 10, 10, 0.0f);
+        
         Sequence huechange = new Sequence();
         float hueChangeRange = 0.25f;
         float huernd = hueChangeRange - (float)(Math.random() * hueChangeRange * 2);
         huechange.hueBy(huernd);
-        huechange.duration(throbPeriod);
+        //huechange.duration(throbPeriod);
+        huechange.duration(800);
         huechange.alphaTo(0.0f);
 
-        f.pause(pause).fadeIn(throbPeriod).pause(holdPeriod).queue(huechange);
+        //f.pause(pause).fadeIn(throbPeriod).pause(holdPeriod).queue(huechange);
+        f.pause(pause).fadeIn(500).pause(holdPeriod).queue(huechange);
 
         return f;
     }
@@ -405,7 +417,7 @@ public class ClipPlayer implements AnimationListener {
         sweep.alphaTo(1.0f).duration(fadeInTime).newState();
         sweep.yTo(0).duration(duration-fadeInTime);
 
-        gradient.queue(sweep).announce(Message.SCREENSAVER).fadeOut(fadeInTime*2);
+        gradient.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
     }
     
     public void ssCandyCane(){
@@ -414,21 +426,28 @@ public class ClipPlayer implements AnimationListener {
         int height     = 768;
         int width     = 512;
 
+        String contentName = "foo";
+        
+        if (Math.random() < 0.5) {
+        	contentName = "candy_cane_512_v2";
+        } else {
+        	contentName = "candy_cane_512";
+        }
    
-        Clip candycane    = ssAll.addClip(eam.getContent("candy_cane_512"), 
+        Clip candycane    = ssAll.addClip(eam.getContent(contentName), 
                 null, 
                 0, -height, 
                 width, height, 
                 0.0f);
 
-        int fadeInTime = 4000;
+        int fadeInTime = 3000;
         Sequence sweep = new Sequence();
         //sweep.yTo(eam.getFrameDimensions().height).duration(duration);
         sweep.yTo(-height + (height * fadeInTime/duration));
         sweep.alphaTo(1.0f).duration(fadeInTime).newState();
         sweep.yTo(0).duration(duration-fadeInTime);
 
-        candycane.queue(sweep).announce(Message.SCREENSAVER).fadeOut(fadeInTime*2);
+        candycane.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
     }
     
     
@@ -851,7 +870,7 @@ public class ClipPlayer implements AnimationListener {
 
 
     public void vertWavesRedMag(){
-        ssm.playGroupRandom("6");
+        //ssm.playGroupRandom("6");
         
         //need black in here
         Clip black = eam.addClip(null, Color.getHSBColor(.0f, .99f, .0f), 0, 0, eam.getFrameDimensions().width, eam.getFrameDimensions().height-vaseVMax, 1.0f);
@@ -943,7 +962,8 @@ public class ClipPlayer implements AnimationListener {
         //Clip c2 = eam.addClip(eam.getContent("grad1200_three_blue_green"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
         Clip c1 = eam.addClip(eam.getContent("grad1200_three_blue_green"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
         Clip c2 = eam.addClip(eam.getContent("grad1200_three_blue_green"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
-
+        //2016 add black here!!!
+        
         Sequence sweep = new Sequence();
         sweep.xTo(eam.getFrameDimensions().width + width).duration(duration);
         sweep.hueBy(0.2f);
@@ -1084,6 +1104,7 @@ public class ClipPlayer implements AnimationListener {
         return (normalDist < wrapDist) ? normalDist : wrapDist;
     }
 
+    
     private static Color randomHue(float hueMin, float hueDelta, float brightness, float saturation){
         float randHue = hueMin + (float)((Math.random() * hueDelta));
         return Color.getHSBColor(randHue, brightness, brightness);
