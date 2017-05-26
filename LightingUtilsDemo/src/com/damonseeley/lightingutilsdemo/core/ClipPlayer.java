@@ -222,7 +222,9 @@ public class ClipPlayer implements AnimationListener {
             	//2016
             	logger.info("case CHOOSE");
                 //ssOrangeYellow();
-            	if (Math.random() < 0.33) {
+            	/*
+            	 * if (Math.random() < 0.33) {
+            	 
             		 ssFrozen();
              		logger.info("chose Frozen");
 
@@ -233,7 +235,10 @@ public class ClipPlayer implements AnimationListener {
             	} else {
             		ssSparkle();
             		logger.info("chose sparkle");
-            	}                
+            	}  
+            	*/
+            	
+            	warriors();
                                 
 
             	break;
@@ -318,9 +323,10 @@ public class ClipPlayer implements AnimationListener {
         //ssStripeTest();
         //ssOrangeYellow();
         //ssFrozen();
-        ssCandyCane();
+        //ssCandyCane();
         //ssMultiClouds(); //OR
         //ssSparkle();
+        warriors();
         
         
     }
@@ -405,6 +411,28 @@ public class ClipPlayer implements AnimationListener {
 
    
         Clip gradient    = ssAll.addClip(eam.getContent("frozen_anna_elsa_proc"), 
+                null, 
+                0, -height, 
+                eam.getFrameDimensions().width, height, 
+                0.0f);
+
+        int fadeInTime = 4000;
+        Sequence sweep = new Sequence();
+        //sweep.yTo(eam.getFrameDimensions().height).duration(duration);
+        sweep.yTo(-height + (height * fadeInTime/duration));
+        sweep.alphaTo(1.0f).duration(fadeInTime).newState();
+        sweep.yTo(0).duration(duration-fadeInTime);
+
+        gradient.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
+    }
+    
+    public void warriors(){
+
+        int duration   = 30000;
+        int height     = 800;
+
+   
+        Clip gradient    = ssAll.addClip(eam.getContent("warriors"), 
                 null, 
                 0, -height, 
                 eam.getFrameDimensions().width, height, 
