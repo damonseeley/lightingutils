@@ -238,28 +238,21 @@ public class ClipPlayer implements AnimationListener {
             	}  
             	*/
             	
-            	warriors();
-                                
+            	//warriors();
+                  
+            	//lgbtq();
+            	//americafuckyeah();
+            	ssCandyCane2();
+            	//ssHarvest();
+            	
 
             	break;
             case SCREENSAVER:
+            	//ssHarvest();
+            	ssCandyCane2();
             	break;
-        	case SSVASE_THROB:
-            	defaultClip();
-            	break;
-            case COBRA_THROB:
-            	defaultClip();
-            case LEAVES:
-            	defaultClip();
-                break;
             case SPARKLE:
                 ssSparkle();
-                break;
-            case IVASE_THROB:
-            	defaultClip();
-                break;
-            case COBRACLOUDS:
-            	defaultClip();
                 break;
             }
         }
@@ -324,9 +317,13 @@ public class ClipPlayer implements AnimationListener {
         //ssOrangeYellow();
         //ssFrozen();
         //ssCandyCane();
+        ssCandyCane2();
         //ssMultiClouds(); //OR
         //ssSparkle();
-        warriors();
+        //warriors();
+        //lgbtq();
+        //americafuckyeah();
+        //ssHarvest();
         
         
     }
@@ -404,6 +401,28 @@ public class ClipPlayer implements AnimationListener {
         gradient.queue(sweep).announce(Message.SCREENSAVER).fadeOut(fadeInTime*2);
     }
     
+    public void ssHarvest(){
+
+        int duration   = 60000;
+        int height     = 512;
+
+   
+        Clip gradient    = ssAll.addClip(eam.getContent("harvest_512"), 
+                null, 
+                0, -height, 
+                eam.getFrameDimensions().width, height, 
+                0.0f);
+
+        int fadeInTime = 4000;
+        Sequence sweep = new Sequence();
+        //sweep.yTo(eam.getFrameDimensions().height).duration(duration);
+        sweep.yTo(-height + (height * fadeInTime/duration));
+        sweep.alphaTo(1.0f).duration(fadeInTime).newState();
+        sweep.yTo(0).duration(duration-fadeInTime);
+
+        gradient.queue(sweep).announce(Message.SCREENSAVER).fadeOut(fadeInTime*2);
+    }
+    
     public void ssFrozen(){
 
         int duration   = 30000;
@@ -448,6 +467,48 @@ public class ClipPlayer implements AnimationListener {
         gradient.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
     }
     
+    public void americafuckyeah(){
+
+        int duration   = 60000;
+        int height     = 800;
+
+   
+        Clip gradient    = ssAll.addClip(eam.getContent("america"), 
+                null, 
+                10, 0, 
+                290, 330, 
+                0.0f);
+
+        int fadeInTime = 6000;
+        Sequence sweep = new Sequence();
+        sweep.yTo(0);
+        sweep.alphaTo(1.0f).duration(fadeInTime).newState();
+        sweep.yTo(0).duration(duration-fadeInTime);
+
+        gradient.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
+    }
+    
+    public void lgbtq(){
+
+        int duration   = 60000;
+        int height     = 800;
+
+   
+        Clip gradient    = ssAll.addClip(eam.getContent("lgbtq"), 
+                null, 
+                0, 0, 
+                290, 330, 
+                0.0f);
+
+        int fadeInTime = 6000;
+        Sequence sweep = new Sequence();
+        sweep.yTo(0);
+        sweep.alphaTo(1.0f).duration(fadeInTime).newState();
+        sweep.yTo(0).duration(duration-fadeInTime);
+
+        gradient.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
+    }
+    
     public void ssCandyCane(){
 
         int duration   = 20000;
@@ -478,6 +539,37 @@ public class ClipPlayer implements AnimationListener {
         candycane.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
     }
     
+    
+    public void ssCandyCane2(){
+
+        int duration   = 28000;
+        int height     = 900;
+        int width     = 512;
+
+        String contentName = "candycane";
+        
+        if (Math.random() < 0.5) {
+        	contentName = "candy_cane_512_v2";
+        } else {
+        	contentName = "candy_cane_512";
+        }
+   
+        Clip candycane    = ssAll.addClip(eam.getContent(contentName), 
+                null, 
+                0, -height, 
+                width, height, 
+                0.0f);
+
+        int fadeInTime = 3000;
+        Sequence sweep = new Sequence();
+        sweep.yTo(-height + (height * fadeInTime/duration));
+        sweep.alphaTo(1.0f).duration(fadeInTime).newState();
+        sweep.yTo(0).duration(duration-fadeInTime);
+
+        //candycane.queue(sweep).announce(Message.CHOOSE).fadeOut(fadeInTime*2);
+        candycane.queue(sweep).announce(Message.SPARKLE).fadeOut(fadeInTime*2);
+
+    }
     
     
     
@@ -988,8 +1080,8 @@ public class ClipPlayer implements AnimationListener {
         int width = 600;
         //Clip c1 = eam.addClip(eam.getContent("grad1200_three_blue_green"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
         //Clip c2 = eam.addClip(eam.getContent("grad1200_three_blue_green"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
-        Clip c1 = eam.addClip(eam.getContent("grad1200_three_blue_green"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
-        Clip c2 = eam.addClip(eam.getContent("grad1200_three_blue_green"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
+        Clip c1 = eam.addClip(eam.getContent("grad1200_three_blue_green_trans"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
+        Clip c2 = eam.addClip(eam.getContent("grad1200_three_blue_green_trans"), Color.getHSBColor(.4f, .99f, .99f), -width, 0, width, eam.getFrameDimensions().height, 1.0f);
         //2016 add black here!!!
         
         Sequence sweep = new Sequence();
